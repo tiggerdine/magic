@@ -1,0 +1,20 @@
+{
+  "manifest_version": 2,
+  "name": "Scryfall Enhancer",
+  "version": "0.1",
+  "author": "Martin Tiggerdine",
+
+  "description": "Enhance your Scryfall experience... at instant speed!",
+
+  "icons": {
+    "32": "icons/icon_32.png",
+    "64": "icons/icon_64.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.scryfall.com/*"],
+      "js": ["js/inject.js"]
+    }
+  ]
+}
