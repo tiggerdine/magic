@@ -36,6 +36,11 @@ const copyCards = () => {
     const copyButton = document.querySelector('#copy-button');
     copyButton.textContent = '✅';
     timeout = setTimeout(() => copyButton.textContent = '📋', 1000);
+
+    const url = new URL(window.location.href);
+    url.hostname = 'api.scryfall.com';
+    url.pathname = 'cards/' + url.pathname;
+    console.debug(url);
 }
 
 if (path.startsWith('/search')) {
