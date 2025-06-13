@@ -6,6 +6,7 @@ const injectCopyButton = () => {
     const displayOptions = document.querySelector('.search-controls-display-options');
     const cardsFound = document.querySelector('.search-empty') == null;
 
+    // Create copy button
     copyButton = Object.assign(
         document.createElement('a'), {
             id: 'copy-button',
@@ -16,21 +17,30 @@ const injectCopyButton = () => {
         }
     );
 
+    // Call copyCards when copy button is clicked
     copyButton.addEventListener('click', copyCards);
 
+    // Inject copy button after display options
     displayOptions.after(copyButton);
 }
 
 const copyCards = () => {
+    // Disable copy button temporarily
     copyButton.classList.add('disabled');
 
     fetchAllCards('https://api.scryfall.com/cards/search' + location.search)
         .then(cards => {
+            // Extract card names
             const cardNames = cards.map(card => card.name).join('\n');
+
+            // Copy card names to clipboard
             navigator.clipboard.writeText(cardNames);
         })
         .catch(console.error)
-        .finally(() => copyButton.classList.remove('disabled'));
+        .finally(() => {
+            // Re-enable copy button
+            copyButton.classList.remove('disabled')
+        });
 };
 
 const fetchAllCards = async (url) => {
@@ -53,6 +63,7 @@ const fetchAllCards = async (url) => {
             allCards.push(...json.data);
 
             if (json.has_more) {
+                // Continue to next page after 100 ms
                 url = json.next_page;
                 await sleep(100);
             } else {
