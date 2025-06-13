@@ -2,6 +2,8 @@
 
 Scryfall Enhancer is a Firefox add-on that extends the functionality of [Scryfall](https://scryfall.com/), a card search tool for Magic: The Gathering.
 
+Get it @ [addons.mozilla.org](https://addons.mozilla.org/en-GB/firefox/addon/scryfall-enhancer/).
+
 ## Features
 
 - A **copy button** that lets you copy card search results straight to your clipboard.
