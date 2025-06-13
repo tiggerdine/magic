@@ -1,5 +1,7 @@
 const path = window.location.pathname;
 
+var timeout;
+
 const injectCopyButton = () => {
     const displayOptions = document.querySelector('.search-controls-display-options');
     const cardsFound = document.querySelector('.search-empty') == null;
@@ -20,6 +22,8 @@ const injectCopyButton = () => {
 }
 
 const copyCards = () => {
+    clearTimeout(timeout);
+
     const cardGrid = document.querySelector('.card-grid-inner');
     const cards = Array.from(cardGrid.querySelectorAll(
         `.card-grid-item:not(.flexbox-spacer)
@@ -28,6 +32,10 @@ const copyCards = () => {
     )).map(span => span.textContent);
 
     navigator.clipboard.writeText(cards.join('\n'));
+
+    const copyButton = document.querySelector('#copy-button');
+    copyButton.textContent = '✅';
+    timeout = setTimeout(() => copyButton.textContent = '📋', 1000);
 }
 
 if (path.startsWith('/search')) {
