@@ -1,5 +1,10 @@
 {
   "author": "Martin Tiggerdine",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{f085be20-e16b-43d1-8de3-e59299d30161}"
+    }
+  },
   "content_scripts": [
     {
       "matches": ["*://*.scryfall.com/*"],
