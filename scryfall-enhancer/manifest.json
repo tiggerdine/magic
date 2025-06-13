@@ -1,22 +1,19 @@
 {
-  "manifest_version": 2,
-  "name": "Scryfall Enhancer",
-  "version": "0.1",
   "author": "Martin Tiggerdine",
-
-  "description": "Enhance your Scryfall experience... at instant speed! 🧙‍♂️",
-
-  "icons": {
-    "32": "icons/icon_32.png",
-    "64": "icons/icon_64.png"
-  },
-
-  "permissions": ["https://api.scryfall.com/"],
-
   "content_scripts": [
     {
       "matches": ["*://*.scryfall.com/*"],
       "js": ["js/inject.js"]
     }
-  ]
+  ],
+  "description": "Enhance your Scryfall experience... at instant speed! 🧙‍♂️",
+  "homepage_url": "https://github.com/tiggerdine/magic/tree/master/scryfall-enhancer",
+  "icons": {
+    "32": "icons/icon_32.png",
+    "64": "icons/icon_64.png"
+  },
+  "manifest_version": 2,
+  "name": "Scryfall Enhancer",
+  "permissions": ["https://api.scryfall.com/"],
+  "version": "0.1"
 }

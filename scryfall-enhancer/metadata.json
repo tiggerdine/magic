@@ -1,0 +1,18 @@
+{
+  "categories": {
+    "firefox": ["games-entertainment", "search-tools"]
+  },
+  "description": {
+    "en-US": "<strong>Scryfall Enhancer</strong> adds helpful features to the <a href=\"https://scryfall.com/\">Sryfall</a> card search experience.\n\nIn <strong>version 0.1</strong>, it introduces a copy (📋) button that lets you <strong>copy all card names</strong> from your search results to your clipboard, using the Scryfall API behind the scenes.\n\nFuture versions will include more enhancements and potentially integrations with platforms like Cardmarket.\n\nGot ideas? Open a suggestion on <a href=\"https://github.com/tiggerdine/magic/issues\">Github</a>!"
+  },
+  "homepage": {
+    "en-US": "github.com/tiggerdine/magic/tree/master/scryfall-enhancer"
+  },
+  "requires_payment": false,
+  "summary": {
+    "en-US": "Enhance your Scryfall experience... at instant speed! 🧙‍♂️"
+  },
+  "version": {
+    "licence": "MIT"
+  }
+}
