@@ -24,36 +24,49 @@ const injectCopyButton = () => {
 const copyCards = () => {
     copyButton.classList.add('disabled');
 
-    callApi(location.search)
-        .then(result => {
-            const cardNames = result.data.map(card => card.name).join('\n');
-
+    fetchAllCards('https://api.scryfall.com/cards/search' + location.search)
+        .then(cards => {
+            const cardNames = cards.map(card => card.name).join('\n');
             navigator.clipboard.writeText(cardNames);
         })
         .catch(console.error)
         .finally(() => copyButton.classList.remove('disabled'));
-}
+};
 
-const callApi = async (search) => {
+const fetchAllCards = async (url) => {
+    const allCards = [];
+
     try {
-        const response = await fetch(
-            'https://api.scryfall.com/cards/search' + search, {
+        while (url) {
+            const response = await fetch(url, {
                 headers: {
                     'User-Agent': 'com.github.tiggerdine.scryfall-enhancer/0.1',
                     'Accept': '*/*'
                 }
+            });
+
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
             }
-        );
 
-        if (!response.ok) {
-            throw new Error(`Response status: ${response.status}`);
+            const json = await response.json();
+            allCards.push(...json.data);
+
+            if (json.has_more) {
+                url = json.next_page;
+                await sleep(100);
+            } else {
+                url = null;
+            }
         }
-
-        return await response.json();
     } catch (error) {
-        console.error(error.message);
+        console.error('Error fetching cards:', error.message);
     }
-}
+
+    return allCards;
+};
+
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 if (location.pathname.startsWith('/search')) {
     injectCopyButton();
