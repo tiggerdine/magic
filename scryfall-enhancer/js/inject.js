@@ -1,12 +1,12 @@
-const path = window.location.pathname;
+const location = window.location;
 
-var timeout;
+var copyButton;
 
 const injectCopyButton = () => {
     const displayOptions = document.querySelector('.search-controls-display-options');
     const cardsFound = document.querySelector('.search-empty') == null;
 
-    const copyButton = Object.assign(
+    copyButton = Object.assign(
         document.createElement('a'), {
             id: 'copy-button',
             className: `button-n icon-only${cardsFound ? '' : ' disabled'}`,
@@ -22,27 +22,39 @@ const injectCopyButton = () => {
 }
 
 const copyCards = () => {
-    clearTimeout(timeout);
+    copyButton.classList.add('disabled');
 
-    const cardGrid = document.querySelector('.card-grid-inner');
-    const cards = Array.from(cardGrid.querySelectorAll(
-        `.card-grid-item:not(.flexbox-spacer)
-         .card-grid-item-card
-         .card-grid-item-invisible-label`
-    )).map(span => span.textContent);
+    callApi(location.search)
+        .then(result => {
+            const cardNames = result.data.map(card => card.name).join('\n');
 
-    navigator.clipboard.writeText(cards.join('\n'));
-
-    const copyButton = document.querySelector('#copy-button');
-    copyButton.textContent = '✅';
-    timeout = setTimeout(() => copyButton.textContent = '📋', 1000);
-
-    const url = new URL(window.location.href);
-    url.hostname = 'api.scryfall.com';
-    url.pathname = 'cards/' + url.pathname;
-    console.debug(url);
+            navigator.clipboard.writeText(cardNames);
+        })
+        .catch(console.error)
+        .finally(() => copyButton.classList.remove('disabled'));
 }
 
-if (path.startsWith('/search')) {
+const callApi = async (search) => {
+    try {
+        const response = await fetch(
+            'https://api.scryfall.com/cards/search' + search, {
+                headers: {
+                    'User-Agent': 'com.github.tiggerdine.scryfall-enhancer/0.1',
+                    'Accept': '*/*'
+                }
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+if (location.pathname.startsWith('/search')) {
     injectCopyButton();
 }

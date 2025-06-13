@@ -11,6 +11,8 @@
     "64": "icons/icon_64.png"
   },
 
+  "permissions": ["https://api.scryfall.com/"],
+
   "content_scripts": [
     {
       "matches": ["*://*.scryfall.com/*"],
