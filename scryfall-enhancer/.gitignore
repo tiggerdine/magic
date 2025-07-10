@@ -1,3 +1,10 @@
 /web-ext-artifacts/
 /.amo-upload-uuid
 /.web-extension-id
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

@@ -57,7 +57,7 @@ const fetchAllCards = async (url) => {
         while (url) {
             const response = await fetch(url, {
                 headers: {
-                    'User-Agent': 'com.github.tiggerdine.scryfall-enhancer/0.1',
+                    'User-Agent': 'com.github.tiggerdine.scryfall-enhancer/0.2',
                     'Accept': '*/*'
                 }
             });

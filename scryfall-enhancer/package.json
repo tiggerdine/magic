@@ -1,0 +1,13 @@
+{
+  "name": "scryfall-enhancer",
+  "version": "0.2",
+  "description": "Scryfall Enhancer is a Firefox add-on that extends the functionality of [Scryfall](https://scryfall.com/), a card search tool for Magic: The Gathering.",
+  "devDependencies": {
+    "@playwright/test": "^1.54.0",
+    "@types/node": "^24.0.12"
+  },
+  "scripts": {},
+  "keywords": [],
+  "author": "Martin Tiggerdine",
+  "license": "MIT"
+}
