@@ -24,23 +24,30 @@ const injectCopyButton = () => {
     displayOptions.after(copyButton);
 }
 
-const copyCards = () => {
-    // Disable copy button temporarily
-    copyButton.classList.add('disabled');
+const copyCards = async () => {
+    const lastPage = document.querySelector('p.last-page');
+    let cardNames;
 
-    fetchAllCards('https://api.scryfall.com/cards/search' + location.search)
-        .then(cards => {
-            // Extract card names
-            const cardNames = cards.map(card => card.name).join('\n');
+    if (lastPage) {
+        // Read card names from page
+        cardNames = [...document.querySelectorAll('span.card-grid-item-invisible-label')]
+            .map(it => it.textContent);
+    } else {
+        copyButton.classList.add('disabled');
 
-            // Copy card names to clipboard
-            navigator.clipboard.writeText(cardNames);
-        })
-        .catch(console.error)
-        .finally(() => {
-            // Re-enable copy button
-            copyButton.classList.remove('disabled')
-        });
+        try {
+            // Get card names from API
+            const cards = await fetchAllCards('https://api.scryfall.com/cards/search' + location.search);
+            cardNames = cards.map(card => card.name);
+        } catch (e) {
+            console.error(e);
+        } finally {
+            copyButton.classList.remove('disabled');
+        }
+    }
+
+    // Copy card names to clipboard
+    navigator.clipboard.writeText(cardNames.join('\n'));
 };
 
 const fetchAllCards = async (url) => {
